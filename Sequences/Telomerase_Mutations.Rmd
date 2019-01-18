@@ -1,0 +1,65 @@
+---
+title: "Telomerase_Mutations"
+author: "Dave_Halvorsen"
+date: "January 18, 2019"
+output: html_document
+---
+
+```{r}
+library(seqinr)
+setwd("/media/david/Linux/Telomerase_Disorders/Sequences")
+getwd()
+list.files()
+```
+
+```{r}
+# Dyskerin DNA
+hDyskerin_DNA <- read.fasta("hDyskerin_NCBI_ChromsomeX_DNA.fasta")
+hDyskerin_DNA_Sequence <- hDyskerin_DNA[[1]]
+length(hDyskerin_DNA_Sequence)
+hDyskerin_DNA_Sequence
+```
+
+```{r}
+# Dyskerin Protein
+# https://uswest.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g=ENSG00000130826;r=X:154762756-154777689;t=ENST00000369550
+Dyskerin_AA <- read.fasta("hDyskerin_Protein_Uniprot_O60832.fasta")
+Dyskerin_AA_Sequence <- Dyskerin_AA[[1]]
+length(Dyskerin_AA_Sequence)
+Dyskerin_AA_Sequence
+```
+
+
+```{r}
+# hTERC DNA
+
+hTERC_DNA <- read.fasta("hTERC_NCBI_RNA.fasta")
+hTERC_DNA_sequence <- hTERC_RNA[[1]]
+length(hTERC_DNA_sequence)
+hTERC_DNA_sequence
+# convert to RNA
+```
+
+
+```{r}
+# hTERT DNA
+hTERT_DNA <- read.fasta("hTERT_NCBI_Chromosome5_DNA.fasta")
+hTERT_DNA_Sequence <- hTERT_DNA[[1]]
+length(hTERT_DNA_Sequence)
+hTERT_DNA_Sequence
+```
+
+```{r}
+# https://uswest.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g=ENSG00000164362;r=5:1253167-1295047;t=ENST00000310581
+# hTERT Protein
+hTERT_AA <- read.fasta("hTERT_Protein_Uniprot_O14746.fasta")
+# hTERT_AA <- readAAStringSet("hTERT_Protein_Uniprot_O14746.fasta")
+hTERT_AA_sequences <- hTERT_AA[[1]]
+length(hTERT_AA_sequences)
+hTERT_AA_sequences
+```
+
+```{r}
+#
+```
+
