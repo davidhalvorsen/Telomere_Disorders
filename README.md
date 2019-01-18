@@ -5,8 +5,70 @@
 
 --------------------------------------------------------------------------------------
 # Telomeres Shorten with Each Division
+==============================================
+<a name="Telomeres_Shorten_with_Age"></a>
+# Telomeres Shorten with Age
+Human telomeres are estimated to be 5,000 - 15,000 base pairs at birth (Sanders 2013, Blackburn 2001). The end replication problem shortens telomeres by approximately 50 bp with each round of cell division (Proctor 2002, Suda 2002, Hastie 1990). 
 
-## Single Telomere PD Shortening Model
+<a name="Simple_1_Telomere_Model_Damage_Checkpoint"></a>
+#### Simple 1 Telomere Model & Damage Checkpoint
+The situation is more complicated than that model. A DNA damage checkpoint will be triggered at around 5k bp. If cell cycle checkpoints are intact, the cell will senesce at around 5 kb. If oncogenic changes have occurred, the cell will divide until around 3k bp. The subtelomeric region is estimated to be between 2-4 kbp (Counter 1996). There will be genomic instability, which will lead to more mutations and eventual cell death UNLESS a telomere maintenance mechanism stabilizes the telomeres (Harley 2008, Shay 2012). 
+
+![Harley_2008_Box1a](/Assets/Harley_2008_Box1a.jpg "Harley_2008_Box1a")
+
+
+Here's that slightly more complicated model:
+
+```r
+# These variables are the starting point. The starting telomere length is 5000. 50 bp are lost / division. 
+starting_length = 10000
+current_length <- starting_length
+bp_loss_per_division = 50
+current_division <- 0
+number_of_cells <- 1
+mutations <- 0
+dividing <- TRUE
+# This simple model divides until senescence is reached. 
+while(dividing) {
+  # There will be 200 divisions for this case. I don't want to overwhelm the screen, so I'm limiting to #1 and #s divisible by 20.
+  if(current_division == 0) {
+    print(paste("There is one ", number_of_cells, " cell with a telomere length of ", current_length, " bp and ", mutations, " mutations."))
+  }
+  else if (current_division %% 20 == 0) {
+    # Shay 2012 model uses 1 mutation / 20 divisions 
+    mutations <- mutations + 1
+    print(paste("There are ", number_of_cells, " cells after ", current_division, " doublings with a telomere length of ", current_length, " bp and ", mutations, " mutations."))
+  }
+  # cells senesce around a telomere length of 5000 bp Harley 2008 
+  else if (current_length < 5000) {
+    dividing <- FALSE
+    print("This cell has senesced at a telomere length of 5,000 bp")
+  }
+  # The cells double, the telomere length is shortened by 50 bp, and the new division is initiated.
+  number_of_cells <- number_of_cells * 2
+  current_length <- current_length - 50
+  current_division <- current_division + 1
+}
+```
+
+
+Here are the last couple of lines of output:
+
+```sh
+[1] "There is one  1  cell with a telomere length of  10000  bp and  0  mutations."
+[1] "There are  1048576  cells after  20  doublings with a telomere length of  9000  bp and  1  mutations."
+[1] "There are  1099511627776  cells after  40  doublings with a telomere length of  8000  bp and  2  mutations."
+[1] "There are  1152921504606846976  cells after  60  doublings with a telomere length of  7000  bp and  3  mutations."
+[1] "There are  1.20892581961463e+24  cells after  80  doublings with a telomere length of  6000  bp and  4  mutations."
+[1] "There are  1.26765060022823e+30  cells after  100  doublings with a telomere length of  5000  bp and  5  mutations."
+[1] "This cell has senesced at a telomere length of 5,000 bp"
+```
+
+In the previous model we saw that 5 mutations occurred over 100 population doublings. I based this on an assumption from one of Jerry Shay's oncogenic models. Cellular senescence stopped the cells in my current model from developing more mutations. It is thought that 8-15 mutations are enough for a cell to become cancerous (Shay 2012).
+
+![Shay_2012_Mutations_Cancer](/Assets/Shay_2012_Mutations_Cancer.jpg "Shay_2012_Mutations_Cancer")
+==============================================
+
 
 ## 23 Chromosome, 23 (Combined Arm) Telomere Model
 picutre of chromosome with specification of summing telomere
